@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amirmohammad | فروشگاه لباس</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+:root{--blue:#1769d2;--deep:#104b9b;--pale:#eef6ff;--ink:#17243a;--muted:#718096}
+*{box-sizing:border-box}body{margin:0;background:#f8fbff;color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif}
+header{background:#fff;border-bottom:1px solid #e6eef8;position:sticky;top:0;z-index:3}
+.nav{max-width:1120px;margin:auto;padding:15px 22px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.brand{font-size:27px;font-weight:800;color:var(--blue);letter-spacing:-1px}.brand small{display:block;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0}
+button,.btn{border:0;border-radius:12px;padding:11px 17px;background:var(--blue);color:white;font:600 14px Vazirmatn;cursor:pointer;text-decoration:none;display:inline-block}
+button:hover,.btn:hover{background:var(--deep)}.outline{background:white;color:var(--blue);border:1px solid #c9def8}
+.hero{max-width:1120px;margin:28px auto 22px;padding:45px 35px;border-radius:25px;background:linear-gradient(120deg,#eaf4ff,#fff);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.hero h1{font-size:clamp(27px,5vw,43px);margin:0 0 10px;color:#123d78}.hero p{color:#5d6e83;margin:0 0 20px}.hero-art{font-size:86px;filter:drop-shadow(0 12px 14px #9dbce855)}
+main{max-width:1120px;margin:0 auto;padding:0 22px 60px}.section-head{display:flex;justify-content:space-between;align-items:center;margin:30px 0 15px;gap:12px}.section-head h2{margin:0;font-size:23px}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:18px}
+.card{background:white;border:1px solid #e6eef8;border-radius:18px;overflow:hidden;box-shadow:0 5px 20px #163b6810}
+.photo{height:225px;background:#eef4fb;display:flex;align-items:center;justify-content:center;color:#9aabc0;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover}
+.info{padding:14px}.info h3{margin:0 0 6px;font-size:16px}.desc{font-size:12px;color:var(--muted);min-height:20px}.price{font-weight:800;color:var(--blue);margin:10px 0}
+.empty{padding:35px;text-align:center;color:var(--muted);background:white;border:1px dashed #cbdcf0;border-radius:18px;grid-column:1/-1}
+.panel{background:white;border:1px solid #e1ebf7;border-radius:18px;padding:20px;margin:26px 0}
+.panel h2{margin:0 0 15px}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+input,textarea,select{width:100%;padding:12px;border:1px solid #d7e3f1;border-radius:10px;font:14px Vazirmatn;background:#fff;color:var(--ink)}
+textarea{min-height:75px;resize:vertical}.full{grid-column:1/-1}.hint{font-size:12px;color:var(--muted);line-height:1.8}
+.hidden{display:none!important}.order-row{padding:12px 0;border-bottom:1px solid #edf2f8}.order-row:last-child{border:0}
+footer{text-align:center;padding:24px;color:#7d8ca0;font-size:12px}
+.modal{position:fixed;inset:0;background:#0b1c3388;display:none;align-items:center;justify-content:center;padding:18px;z-index:5}.modal.show{display:flex}.modalbox{background:white;border-radius:20px;padding:22px;width:min(520px,100%);max-height:90vh;overflow:auto}.modalbox h2{margin-top:0}.close{float:left;background:#edf4fc;color:var(--blue);padding:5px 12px}
+@media(max-width:650px){.hero{margin:18px 14px;padding:28px 22px}.hero-art{font-size:55px}.nav{padding:12px 15px}.brand{font-size:22px}.formgrid{grid-template-columns:1fr}main{padding:0 14px 40px}.section-head{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="brand">Amirmohammad<small>فروشگاه آنلاین پوشاک</small></div><div><a class="btn outline" href="tel:09126003350">تماس: 09126003350</a> <button class="outline" onclick="scrollToProducts()">مشاهده محصولات</button> <button onclick="openOrders()">سفارش‌ها</button></div></div></header>
+<section class="hero"><div><h1>استایل تازه، انتخاب تو ✦</h1><p>لباس‌های مورد علاقه‌ات را پیدا کن و به‌سادگی سفارش بده.</p><button onclick="scrollToProducts()">شروع خرید</button></div><div class="hero-art">🛍️</div></section>
+<main>
+<div class="section-head" id="productTitle"><h2>محصولات فروشگاه</h2><span class="hint">برای ثبت سفارش، محصول دلخواهت را انتخاب کن.</span></div>
+<div class="products" id="products"></div>
+
+<section class="panel" id="adminPanel">
+<h2>مدیریت فروشگاه | افزودن کالا</h2>
+<form id="productForm" class="formgrid">
+<input id="pname" placeholder="نام کالا" required>
+<input id="pprice" type="number" min="0" placeholder="قیمت (تومان)" required>
+<input id="pdesc" class="full" placeholder="توضیح کوتاه کالا (اختیاری)">
+<label class="full">عکس محصول: <input id="pimage" type="file" accept="image/*" required></label>
+<button class="full" type="submit">افزودن محصول به فروشگاه</button>
+</form>
+<p class="hint">عکس و کالاها در همین مرورگر ذخیره می‌شوند. برای انتشار عمومی و مدیریت از چند دستگاه، فروشگاه به هاست و پایگاه داده نیاز دارد.</p>
+</section>
+<section class="panel hidden" id="ordersPanel"><h2>سفارش‌های ثبت‌شده</h2><div id="ordersList"></div><p class="hint">این فهرست فقط در همین مرورگر و دستگاه قابل مشاهده است.</p></section>
+</main>
+<footer>© Amirmohammad — فروشگاه لباس</footer>
+<div class="modal" id="orderModal"><div class="modalbox"><button class="close" onclick="closeOrder()">بستن</button><h2>ثبت سفارش</h2><p id="selectedProduct" class="hint"></p>
+<form id="orderForm" class="formgrid"><input id="customer" placeholder="نام و نام خانوادگی" required><input id="phone" type="tel" placeholder="شماره تماس" required><input id="size" placeholder="سایز (مثلاً M یا ۴۰)" required><input id="color" placeholder="رنگ موردنظر" required><textarea id="address" class="full" placeholder="آدرس و توضیحات (اختیاری)"></textarea><button class="full">ثبت نهایی سفارش</button></form></div></div>
+<script>
+const $=id=>document.getElementById(id);
+let products=JSON.parse(localStorage.getItem('am_products')||'[]');
+let orders=JSON.parse(localStorage.getItem('am_orders')||'[]');
+let selected=null;
+function save(){localStorage.setItem('am_products',JSON.stringify(products));localStorage.setItem('am_orders',JSON.stringify(orders))}
+function money(n){return Number(n).toLocaleString('fa-IR')+' تومان'}
+function render(){
+ const root=$('products');root.innerHTML='';
+ if(!products.length){root.innerHTML='<div class="empty">هنوز محصولی اضافه نشده است. از بخش «افزودن کالا» اولین محصول را ثبت کن.</div>';return}
+ products.forEach((p,i)=>{const el=document.createElement('article');el.className='card';
+ const img=p.image?`<img src="${p.image}" alt="">`:'<span>بدون عکس</span>';
+ el.innerHTML=`<div class="photo">${img}</div><div class="info"><h3></h3><div class="desc"></div><div class="price"></div><button class="buy">ثبت سفارش</button> <button class="outline remove">حذف</button></div>`;
+ el.querySelector('h3').textContent=p.name;el.querySelector('.desc').textContent=p.desc||'';
+ el.querySelector('.price').textContent=money(p.price);el.querySelector('.buy').onclick=()=>startOrder(i);
+ el.querySelector('.remove').onclick=()=>{if(confirm('این کالا حذف شود؟')){products.splice(i,1);save();render()}};
+ root.appendChild(el);
+ });
+}
+$('productForm').onsubmit=async e=>{e.preventDefault();const f=$('pimage').files[0];if(!f)return;
+ const data=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)});
+ products.unshift({name:$('pname').value,price:$('pprice').value,desc:$('pdesc').value,image:data});
+ save();render();e.target.reset();alert('محصول اضافه شد.');
+};
+function startOrder(i){selected=products[i];$('selectedProduct').textContent=selected.name+' — '+money(selected.price);$('orderModal').classList.add('show')}
+function closeOrder(){$('orderModal').classList.remove('show')}
+$('orderForm').onsubmit=e=>{
+ e.preventDefault();
+ const order={product:selected.name,price:selected.price,name:$('customer').value,phone:$('phone').value,size:$('size').value,color:$('color').value,address:$('address').value,date:new Date().toLocaleString('fa-IR')};
+ orders.unshift(order);save();
+ const message=[
+  'سلام، یک سفارش جدید از فروشگاه Amirmohammad دارم.',
+  'محصول: '+order.product,
+  'قیمت: '+Number(order.price).toLocaleString('fa-IR')+' تومان',
+  'نام مشتری: '+order.name,
+  'شماره تماس مشتری: '+order.phone,
+  'سایز: '+order.size,
+  'رنگ: '+order.color,
+  'آدرس/توضیحات: '+(order.address||'ثبت نشده'),
+  'زمان ثبت: '+order.date
+ ].join('\\n');
+ const whatsappUrl='https://wa.me/989126003350?text='+encodeURIComponent(message);
+ e.target.reset();closeOrder();
+ alert('اطلاعات سفارش آماده است. واتساپ باز می‌شود؛ برای ارسال سفارش، دکمه Send را در واتساپ بزنید.');
+ window.open(whatsappUrl,'_blank','noopener');
+};
+function openOrders(){$('ordersPanel').classList.toggle('hidden');$('ordersList').innerHTML=orders.length?orders.map(o=>`<div class="order-row"><b>${escapeText(o.product)}</b> — ${money(o.price)}<br>نام: ${escapeText(o.name)} | تلفن: ${escapeText(o.phone)}<br>سایز: ${escapeText(o.size)} | رنگ: ${escapeText(o.color)}<br><span class="hint">${escapeText(o.address)} · ${escapeText(o.date)}</span></div>`).join(''):'هنوز سفارشی ثبت نشده است.';$('ordersPanel').scrollIntoView({behavior:'smooth'})}
+function escapeText(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function scrollToProducts(){$('productTitle').scrollIntoView({behavior:'smooth'})}
+render();
+</script>
+</body></html>
